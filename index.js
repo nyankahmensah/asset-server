@@ -20,7 +20,7 @@ ensureDir(filesRoot);
 
 const upload = multer({
   limits: {
-    fileSize: 4 * 1024 * 1024,
+    fileSize: 10 * 1024 * 1024,
   },
   storage: multer.diskStorage({
     destination: function (req, file, cb) {
