@@ -46,6 +46,7 @@ app.use(
   "/upload",
   upload.single("file"),
   (req, res) => {
+    console.log(req.file)
     res.status(200).send("/static/images/" + req.file.filename)
   }
 );
