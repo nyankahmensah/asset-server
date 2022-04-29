@@ -43,22 +43,20 @@ app.use(cors());
 app.use("/static", express.static(assetRoot));
 
 app.use("/upload", upload.single("file"), (req, res) => {
+  const fileType = req.file.mimetype.split("/")[0];
   const path =
-    req.file.mimetype === "image"
-      ? "images"
-      : req.file.mimetype === "video"
-      ? "videos"
-      : "files";
+    fileType === "image" ? "images" : fileType === "video" ? "videos" : "files";
   res.status(200).send(`/static/${path}/` + req.file.filename);
 });
 
 app.use("/upload/many", upload.array("files", 10), (req, res) => {
   res.status(200).send(
     req.files.map((file) => {
+      const fileType = file.mimetype.split("/")[0];
       const path =
-        file.mimetype === "image"
+        fileType === "image"
           ? "images"
-          : file.mimetype === "video"
+          : fileType === "video"
           ? "videos"
           : "files";
       return `/static/${path}/` + file.filename;
